@@ -1,0 +1,128 @@
+<html>
+    <head>
+        <title>Challenge Game</title>
+        <style>
+             canvas#canvas{
+                background-color: black;
+            } 
+        </style>
+    <head>
+    <body>
+        <script>
+            var x = 0, y = 0, h = 10, w = 10;
+
+            window.onload = function (){
+                console.log("Start");
+                playArea.start();
+                //playArea.playObj();
+                playObj(x,y);
+                window.setInterval(playArea.update(), 1);
+            }
+            var playArea = {
+                 // create the canvas first
+                canvas: document.createElement("canvas"),
+
+                start: function () {
+                    // call itself for the canvas and define the size
+                    this.canvas.width = 1000;       
+                    this.canvas.height = 800;
+                    this.canvas.id = "canvas";
+                    this.context = this.canvas.getContext("2d"); // gets object for drawing methods?
+                    document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+                    this.frameNo = 0;
+                },
+
+                clear: function(){
+                    this.canvas.width = 0;       
+                    this.canvas.height = 0;
+                    this.canvas.id = "canvas";
+                    this.context = this.canvas.getContext("2d");
+                    document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+                    this.frameNo = 0;
+                },
+
+                update: function (){
+                        playArea.clear();
+                        playArea.start();
+
+                        astroObj();
+                },
+
+                controls: document.addEventListener('keydown', 
+                    function keycode(inputKey){
+                        playArea.clear();
+                        playArea.start();
+                        
+                        //console.log("x = " + x + "   y = " + y);
+
+                        let speed = 4;
+                        switch (inputKey.which || inputKey.keyCode)
+                        {
+                            case 38: // Up
+                                playObj(x, y - speed);
+
+                                //playObj.y += 1;
+                                //goUP(y+1);
+                                //console.log("Key = UP");
+                                // console.log(playObj.x);
+                                break;
+                            case 40: // Down
+                                playObj(x, y + speed);
+
+                                //console.log("Key = DOWN");
+                                break;
+                            case 37: // Left
+                                playObj(x - speed, y);
+
+                                //console.log("Key = LEFT");
+                                break;
+                            case 39: // right
+                                playObj(x + speed, y);
+
+                                //console.log("Key = RIGHT");
+                                break;
+                            default:
+                        }
+                        //console.log("x = " + x + "   y = " + y);
+
+                    }),
+                // playObj: function (x = 10, y = 10, h = 10, w = 10) {
+                //     this.canvas.getContext("2d").fillRect(x ,y ,h ,w);
+
+                // }
+            }
+
+            // function goUP(y) {
+            //     this.y = y;
+            // }
+
+            function playObj(x, y, h = 10, w = 10) {
+                this.x = x;
+                this.y = y;
+                this.h = h;
+                this.w = w;
+                playArea.canvas.getContext("2d").fillStyle = "red";
+                playArea.canvas.getContext("2d").fillRect(x ,y ,h ,w);
+            }
+
+            var counter = 0;
+            function astroObj() {
+                console.log(counter);
+                var astro = {};
+
+                astro.aX = 50
+                astro.aY = 50
+                astro.aH = 50
+                astro.aW = 50
+                
+                astro.iD = counter++;
+
+                playArea.canvas.getContext("2d").fillStyle = "orange";
+                playArea.canvas.getContext("2d").fillRect(astro.aX ,astro.aY ,astro.aH ,astro.aW);
+            }
+
+
+
+        </script>
+    </body>
+</html>
